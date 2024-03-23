@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/fccf2fa57a.js" crossorigin="anonymous"></script>
+    <title>Steve Tetchoup - My Portfolio</title>
+</head>
+<body>
+    <div id="header">
+        <div class="container cont-1">
+            <nav class="nav-bar">
+                <img src="images/Sans titre - 5.png" class="logo">
+                <ul id="sidemenu" onclick="closemenu()">
+                    <li><a href="#header">Accueil</a></li>
+                    <li><a href="#about">A propos</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
+                </ul>
+                <i class="fa-solid fa-bars" onclick="openmenu()"></i>
+            </nav>
+            <div class="header-text">
+                <h1>Salut, je suis <span>Steve Tetchoup</span> <br>Etudiant en Génie logiciel<br>Depuis le Cameroun</h1>
+            </div>
+        </div>
+    </div>
+    <!-- ------------------------------about-------------------------->
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="about-col-1">
+                    <img src="images/p1.png">
+                </div>
+                <div class="about-col-2">
+                    <h1 class="sub-title">A propos</h1>
+                    <p>Actuellement étudiant en 1ère année à l'Institut Universitaire de la Côte, je suis animé par le désir 
+                        de travailler dans le domaine du Génie Logiciel. C'est pourquoi j'ai moi-même développé ce portfolio pour
+                        partager avec vous mes projets et expériences. Je suis présentement à la recherche d'un stage qui
+                        me permettra d'améliorer mes compétences et d'atteindre mes objectifs. <br> <br>N'hésitez pas à me
+                        contacter, je serai ravi d'échanger avec vous.
+                    </p>
+
+                    <div class="tab-titles">
+                        <p class="tab-links active-link" id="link-1" onclick="opentab1()">Compétences</p>
+                        <p class="tab-links" id="link-2" onclick="opentab2()">Expérience</p>
+                        <p class="tab-links" id="link-3" onclick="opentab3()">Education</p>
+                    </div>
+                    <div class="tab-contents active-tab" id="skills">
+                        <ul>
+                            <li><span>Langages étudiés</span><br>- HTML / CSS<br>- JavaScript <br>- C<br>- SQL</li>
+                            <li><span>SGBD étudiés</span> <br>- SQlite <br>- PostgreSQL</li>
+                            <li><span>Autres</span><br>- Git / GitHub</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span>Pas d'expérience pour le moment.</span></li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="education">
+                        <ul>
+                            <li><span>2023-Aujourd'hui</span><br>BTS 1, Génie logiciel <br>Institut Universitaire de la Côte > 3IAC - Institut d'Ingénierie Informatique
+                                d'Afrique Centrale
+                            </li>
+                            <li><span>2021-2023</span><br>licence 1, Mathématiques <br>Université de Yaoundé I</li>
+                            <li><span>2020-2021</span><br>Baccalauréat série scientifique C <br>Lycée bilingue de Mimboman</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ----------------------------services-------------------------->
+
+    <div id="services">
+        <div class="container">
+            <h1 class="sub-title">Mes services</h1>
+            <div class="services-list">
+                <div>
+                    <i class="fa-solid fa-code"></i>
+                    <h2>Dévelopepment Web</h2>
+                </div>
+                <div>
+                    <i class="fa-solid fa-database"></i>
+                    <h2>Gestion des bases de données</h2>
+                </div>
+                <div>
+                    <i class="fa-solid fa-user-gear"></i>
+                    <h2>UX design</h2>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- --------------------------portfolio--------------------------->
+
+    <div id="portfolio">
+        <div class="container">
+            <h1 class="sub-title">Mes projets</h1>
+            <div class="work-list">
+                <div class="work">
+                    <img src="images/calculatrice.png">
+                    <div class="layer">
+                        <h3>Calculatrice</h3>
+                        <p>Cette calculatrice effectue de simples calculs.</p>
+                        <a href="my work/calculator/index.html"><i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/motdepasse.png">
+                    <div class="layer">
+                        <h3>Sign Up</h3>
+                        <p>Ce programme vérifie si le mot de passe contient tous les éléments requis.</p>
+                        <a href="my work/Sign Up/index.html"><i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/todolist.png">
+                    <div class="layer">
+                        <h3>To-Do list</h3>
+                        <p>Un programme pour la gestion des tâches.</p>
+                        <a href="my work/To Do List/index.html"><i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                </div>
+            </div>
+            <a href="my work/mywork.html" class="btn">Voir plus</a>
+        </div>
+    </div>
+
+    <!-- -----------------------contact--------------------------->
+
+    <div id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="contact-left">
+                    <h1 class="sub-title sub">Me contacter</h1>
+                    <p><a href="https://stevetcthoup20@gmail.com"><i class="fa-solid fa-envelope"></i></a>Par email</p>
+                    <p><a href="https://whatsapp.com/dl/+237697932976?text=hello"><i class="fa-brands fa-whatsapp"></i></a>Discuter sur WhatsApp</p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/stevetetchoup"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/stevetetchoup"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://x.com/SteveTetchoup"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/steve-tetchoup-98529027b"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                    <a href="images/cv_demande_de_stage.pdf" download class="btn btn2">Télécharger le CV</a> 
+                </div>
+                <div class="contact-right">
+                    <form action="">
+                        <input type="text" name="Name" placeholder="votre nom" required>
+                        <input type="email" name="email" placeholder="votre email" required>
+                        <textarea name="Message" rows="6" placeholder="votre message"></textarea>
+                        <button type="submit" class="btn btn2">Envoyer</button>
+                    </form>
+                    <span id="msg"></span>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Tous droits reservés © 2024 - ST</p>
+        </div>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
