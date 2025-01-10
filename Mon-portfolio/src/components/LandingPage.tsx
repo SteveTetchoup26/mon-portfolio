@@ -1,16 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Skills from './Skills.tsx'
+import Loader from './Loader.tsx'
 import me from '../assets/images/moi.png'
 // import tailwind from '../assets/images/tailwind.png'
 import postgresql from '../assets/images/postgresql.png'
 import Experience from './Experience.tsx'
 import Work from './Work.tsx'
 import { assets_icons } from '../assets/icons/assets_icons.tsx'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import VITE_API_URL from '../utils/API_URL.ts'
+import axios from 'axios'
 
 
 const LandingPage = () => {
 
   const [copied, setCopied] = useState(false)
+  const [skills, setSkills] = useState([])
+  const [experiences, setExperiences] = useState([])
+  const [works, setWorks] = useState<any>([])
+  const [formatedExperiences, setFormatedExperiences] = useState<any>([]);
+  const [formatedWorks, setFormatedWorks] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const copyMailToClipboard = () => {
     setCopied(true)
@@ -31,6 +41,92 @@ const LandingPage = () => {
     const phone = "+237 697932976"
     navigator.clipboard.writeText(phone)
   }
+
+  const HandleFormatedExperience = (dt: Date) => {
+    const date = new Date(dt);
+    const month = date.toLocaleString("fr-FR", { month: "long"});
+    const year = date.getFullYear();
+
+    return `${month} ${year}`
+  }
+  
+    const fetchSkill = async () => {
+      setIsLoading(true)
+      try {
+          const result = await axios.get(`${VITE_API_URL}/v1/skills/all`);
+          setSkills(result.data.skills);
+          console.log(result.data.skills)
+  
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+  }
+
+  const fetchExperience = async () => {
+    setIsLoading(true);
+    try {
+        const result = await axios.get(`${VITE_API_URL}/v1/experiences/all`);
+
+        setExperiences(result.data.experiences);
+        console.log(result.data.experiences)
+
+        const newFormatedExperiences = result.data.experiences.map((experience: any) => {
+            const start_date = HandleFormatedExperience(experience.start_date);
+            const end_date = HandleFormatedExperience(experience.end_date);
+
+            return {
+                ...experience,
+                start_date: start_date,
+                end_date: end_date 
+              };
+
+        })
+
+        setFormatedExperiences(newFormatedExperiences);
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+
+  const fetchWork = async () => {
+    setIsLoading(true);
+    try {
+        const result = await axios.get(`${VITE_API_URL}/v1/works/all`);
+        setWorks(result.data.works);
+        console.log(result.data.works)
+
+        const formatedWorks = result.data.works.map((work: any) => {
+
+          return {
+            ...work,
+            publication_date: new Date(work.publication_date).toISOString().split('T')[0].slice(0, 4)
+          }
+        })
+
+        setFormatedWorks(formatedWorks)
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+
+  useEffect(() => {
+
+    fetchSkill();
+    fetchExperience();
+    fetchWork();
+
+  }, []);
+
   return (
     <div className='mt-12'>
         <div className='mt-5 mb-20 px-8 xl:px-24 flex md:flex-row md:justify-between md:items-start gap-10 lg:gap-20  items-center flex-col-reverse'>
@@ -103,13 +199,20 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className='flex flex-col items-center gap-8 py-20 px-8 md:px-24'>
+        <div className='flex flex-col items-center gap-8 py-20 px-4 lg:px-24'>
           <div className='flex flex-col items-center gap-2'>
             <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>Skills</h2>
             <p className='text-gray-500 text-center'>The skills, tools and technologies I am really good at: </p>
           </div>
-          <div className='grid md:grid-cols-8 grid-cols-4 gap-4 w-full'>
-              <Skills image={postgresql} name="PostgreSQL" />
+          {/* className='grid md:grid-cols-8 grid-cols-4 justify-center place-items-center gap-4 w-full' */}
+          <div className='flex flex-wrap justify-center items-center gap-4 w-full'>
+              { 
+                isLoading ? 
+                <Loader /> :
+                skills.map((skill: any, index: number) => (
+                  <Skills key={index} image={skill.image_url} name={skill.name} />
+                ))
+              }
           </div>
         </div>
 
@@ -118,8 +221,15 @@ const LandingPage = () => {
             <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>Experience</h2>
             <p className='text-gray-500 text-center'>Here is a quick summary of my most recent experience: </p>
           </div>
-          <Experience />
-          <Experience />
+          {
+            isLoading ? 
+
+            <Loader /> : 
+
+            formatedExperiences.map((experience: any, index: number) => (
+              <Experience key={index} description={experience.description} image={experience.image_company_url} jobTitle={experience.job_title} company={experience.comapny} end_date={experience.end_date} start_date={experience.start_date} />
+            ))
+          }
         </div>
 
         <div id='portfolio' className='flex flex-col items-center gap-8 py-20 px-8 lg:px-24'>
@@ -127,8 +237,15 @@ const LandingPage = () => {
             <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>Works</h2>
             <p className='text-gray-500 text-center'>Some of the noteworthy projects I have built: </p>
           </div>
-          <Work />
-          <Work />
+          {
+            isLoading ? 
+
+            <Loader /> : 
+            
+            formatedWorks.map((work: any, index: number) => (
+              <Work key={index} title={work.title} subtitle={work.subtitle} description={work.description} publication_date={work.publication_date} main_image={work.main_image} />
+            ))
+          }
         </div>
 
         <div id='contact' className='bg-gray-100 flex flex-col items-center gap-8 py-20 px-2 xl:px-24'>
@@ -159,5 +276,6 @@ const LandingPage = () => {
     </div>
   )
 }
+
 
 export default LandingPage
