@@ -1,18 +1,29 @@
-import facebook from '../assets/images/facebook.png'
-import instagram from '../assets/images/instagram.png'
-import twitter from '../assets/images/twitter.png'
-import youtube from '../assets/images/youtube.png'
+import { assets_icons } from '../assets/icons/assets_icons.tsx'
 
 const Footer = () => {
   return (
-        <div className='flex flex-col items-center justify-center gap-4 pt-14 pb-6'>
-            <div className='grid grid-cols-4 gap-4 w-[140px]'>
-                <a href=""><img src={facebook} alt=""/></a>
-                <a href=""><img src={instagram} alt="" /></a>
-                <a href=""><img src={twitter} alt="" /></a>
-                <a href=""><img src={youtube} alt="" /></a>
+        <div className='flex flex-col items-center justify-center gap-4 pt-14 pb-6 bg-black text-white'>
+            <div className='flex gap-[8px]'>
+              <a href="https://www.facebook.com/stevetetchoup" 
+                className='bg-gray-400 p-1 rounded-lg hover:bg-gray-200 transition-all duration-200'
+                target='blank'
+                >
+                  <img src={assets_icons.facebook_icon} alt="" className='h-5 w-5' />
+              </a>
+              <a href="https://www.linkedin.com/in/steve-tetchoup-98529027b" 
+                className='bg-gray-400 p-1 rounded-lg  hover:bg-gray-200 transition-all duration-200'
+                target='blank'
+                >
+                  <img src={assets_icons.linkedin_icon} alt="" className='h-5 w-5' />
+              </a>
+              <a href="https://www.github.com/SteveTetchoup26" 
+                className='bg-gray-400 p-1 rounded-lg hover:bg-gray-200 transition-all duration-200'
+                target='blank'
+                >
+                  <img src={assets_icons.github} alt="" className='h-5 w-5' />
+              </a>
             </div>
-            <p>Copyright ©2024 All rights reserved</p>
+            <p>© 2025 Steve TETCHOUP. All rights reserved.</p>
         </div>
   )
 }

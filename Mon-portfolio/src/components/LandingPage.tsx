@@ -1,25 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Skills from './Skills.tsx'
 import Loader from './Loader.tsx'
-import me from '../assets/images/moi.png'
-// import tailwind from '../assets/images/tailwind.png'
-import postgresql from '../assets/images/postgresql.png'
-import Experience from './Experience.tsx'
-import Work from './Work.tsx'
+import me from '../assets/images/moi.jpg'
+import about from '../assets/images/about-me.png'
 import { assets_icons } from '../assets/icons/assets_icons.tsx'
 import { useState, useEffect } from 'react'
 import VITE_API_URL from '../utils/API_URL.ts'
 import axios from 'axios'
+import WorkCatalog from './catalog/WorkCatalog.tsx'
+import ExperienceCatalog from './catalog/ExperienceCatalog.tsx'
 
 
 const LandingPage = () => {
 
   const [copied, setCopied] = useState(false)
   const [skills, setSkills] = useState([])
-  const [experiences, setExperiences] = useState([])
-  const [works, setWorks] = useState<any>([])
-  const [formatedExperiences, setFormatedExperiences] = useState<any>([]);
-  const [formatedWorks, setFormatedWorks] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const copyMailToClipboard = () => {
@@ -41,21 +36,12 @@ const LandingPage = () => {
     const phone = "+237 697932976"
     navigator.clipboard.writeText(phone)
   }
-
-  const HandleFormatedExperience = (dt: Date) => {
-    const date = new Date(dt);
-    const month = date.toLocaleString("fr-FR", { month: "long"});
-    const year = date.getFullYear();
-
-    return `${month} ${year}`
-  }
   
     const fetchSkill = async () => {
       setIsLoading(true)
       try {
           const result = await axios.get(`${VITE_API_URL}/v1/skills/all`);
           setSkills(result.data.skills);
-          console.log(result.data.skills)
   
       } catch (err) {
         console.log(err);
@@ -64,87 +50,30 @@ const LandingPage = () => {
       }
   }
 
-  const fetchExperience = async () => {
-    setIsLoading(true);
-    try {
-        const result = await axios.get(`${VITE_API_URL}/v1/experiences/all`);
-
-        setExperiences(result.data.experiences);
-        console.log(result.data.experiences)
-
-        const newFormatedExperiences = result.data.experiences.map((experience: any) => {
-            const start_date = HandleFormatedExperience(experience.start_date);
-            const end_date = HandleFormatedExperience(experience.end_date);
-
-            return {
-                ...experience,
-                start_date: start_date,
-                end_date: end_date 
-              };
-
-        })
-
-        setFormatedExperiences(newFormatedExperiences);
-
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-
-  const fetchWork = async () => {
-    setIsLoading(true);
-    try {
-        const result = await axios.get(`${VITE_API_URL}/v1/works/all`);
-        setWorks(result.data.works);
-        console.log(result.data.works)
-
-        const formatedWorks = result.data.works.map((work: any) => {
-
-          return {
-            ...work,
-            publication_date: new Date(work.publication_date).toISOString().split('T')[0].slice(0, 4)
-          }
-        })
-
-        setFormatedWorks(formatedWorks)
-
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
 
   useEffect(() => {
 
     fetchSkill();
-    fetchExperience();
-    fetchWork();
 
   }, []);
 
   return (
-    <div className='mt-12'>
-        <div className='mt-5 mb-20 px-8 xl:px-24 flex md:flex-row md:justify-between md:items-start gap-10 lg:gap-20  items-center flex-col-reverse'>
+    <div className='mt-32'>
+        <div className='min-h-[80vh] mt-5 mb-20 px-8 xl:px-24 flex md:flex-row md:justify-between md:items-start gap-10 lg:gap-20  items-center flex-col-reverse'>
           <div className='md:basis-3/5 flex flex-col gap-8'>
             <div>
-              <h1 className='text-4xl font-bold'>Hi, I'm TETCHOUP</h1>
+              <h1 className='text-4xl font-bold mb-5'>Hi, I'm Steve TETCHOUP</h1>
               <p className='text-gray-500'>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa quam ducimus sapiente tempore nemo 
-                deleniti voluptatibus cupiditate accusamus. Dolorem nihil explicabo, at assumenda vero iste. Animi 
-                minus quis aspernatur voluptatum.
+                I'm a passionate full-stack developer junior based in Douala, Cameroon. I enjoy turning complex problems into simple, beautiful, and intuitive web applications. 
+                With a strong foundation in both frontend and backend development, I help businesses and individuals bring their ideas to life on the web.
               </p>
             </div>
             <div>
                 <div>
-                  <a href='' className='flex items-center gap-2'>
+                  <div className='flex items-center gap-2'>
                       <img src={assets_icons.location} alt="" className='w-5 h-5' />
                       <p className='text-gray-500'>Douala, Cameroon</p>
-                  </a>
+                  </div>
                 </div>
                 <div className='flex items-center gap-4'>
                   <div className='p-1 ml-1 w-1 h-1 rounded-full bg-green-600'></div>
@@ -154,58 +83,65 @@ const LandingPage = () => {
             <div className='flex gap-[2px]'>
               <a href="https://www.facebook.com/stevetetchoup" 
                 className='p-1 rounded-full hover:bg-gray-200 transition-all duration-200'
+                target='blank'
                 >
                   <img src={assets_icons.facebook_icon} alt="" className='h-5 w-5' />
               </a>
               <a href="https://www.linkedin.com/in/steve-tetchoup-98529027b" 
                 className='p-1 rounded-full hover:bg-gray-200 transition-all duration-200'
+                target='blank'
                 >
                   <img src={assets_icons.linkedin_icon} alt="" className='h-5 w-5' />
               </a>
-              <a href="" 
+              <a href="https://www.github.com/SteveTetchoup26" 
                 className='p-1 rounded-full hover:bg-gray-200 transition-all duration-200'
+                target='blank'
                 >
                   <img src={assets_icons.github} alt="" className='h-5 w-5' />
               </a>
             </div>
+            <div className='flex gap-4'>
+              <a href="/CV_Steve_TETCTHOUP.pdf" className='bg-black text-white p-3 md:p-5 rounded-lg hover:opacity-75 transition-opacity duration-200 pointer-events-none cursor-not-allowed' download>Download CV</a>
+              <a href="#portfolio" className='border border-black p-3 md:p-5 rounded-lg hover:bg-black hover:text-white transition-all ease-in-out duration-300'>View projects</a>
+            </div>
           </div>
           <div className='lg:w-[350px] lg:h-[350px] h-[300px] w-[300px] relative'>
-            <img src={me} alt="" className='lg:w-[350px] lg:h-[350px] w-4/5 h-4/5 md:w-full md:h-full absolute left-7 -top-8 md:-left-8 border-8 border-white border-solid' />
+            <img src={me} alt="" className='object-cover lg:w-[350px] lg:h-[350px] w-4/5 h-4/5 md:w-full md:h-full absolute left-7 -top-8 md:-left-8 border-8 border-white border-solid' />
             <div className='bg-gray-200 lg:w-full lg:h-full w-[300px] md:h-[300px] h-[240px]'></div>
           </div>
         </div>
 
-        <div id='about' className='bg-gray-100 flex flex-col items-center gap-10 md:gap-20 py-20 px-8 xl:px-24'>
+        <div id='about' className='scroll-mt-16 bg-gray-100 flex flex-col items-center gap-14 py-12 px-8 xl:px-24'>
           <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>About me</h2>
           <div className='flex md:flex-row !w-full flex-col gap-x-20 items-center md:items-start justify-between'>
             <div className='lg:w-[350px] lg:h-[350px] h-[300px] w-[300px] relative'>
-              <img src={me} alt="" className='lg:w-[350px] lg:h-[350px] w-4/5 h-4/5 md:w-full md:h-full absolute right-8  md:-right-8 -top-8 border-8 border-white border-solid' />
+              <img src={about} alt="" className='object-cover lg:w-[350px] lg:h-[350px] w-4/5 h-4/5 md:w-full md:h-full absolute right-8  md:-right-8 -top-8 border-8 border-white border-solid' />
               <div className='bg-gray-200 lg:w-full lg:h-full w-[300px] md:h-[300px] h-[240px]'></div>
             </div>
             <div className='md:basis-3/5'>
               <h1 className='text-4xl font-bold mb-4'>Curious about me ? Here you have it: </h1>
               <p className='text-gray-500'>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa quam ducimus sapiente tempore nemo 
-                deleniti voluptatibus cupiditate accusamus. Dolorem nihil explicabo, at assumenda vero iste. Animi 
-                minus quis aspernatur voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex corporis, 
-                distinctio, expedita, quos id pariatur ab iure laudantium labore a similique natus praesentium nisi recusandae 
-                magni et odit eos facilis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti qui quasi autem 
-                mollitia fuga, tenetur expedita ullam consectetur veritatis minus eaque rem! Delectus optio earum impedit quasi
-                 excepturi repellendus recusandae. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe officiis rerum 
-                 ducimus facere deserunt modi consequatur sed minus dolore tempore culpa obcaecati, iste quod eos tempora! Cumque 
-                 repudiandae illo similique!
+                I’m a passionate web developer with a strong focus on building modern user interfaces and high-performance applications. 
+                I mainly work with technologies such as <strong>Vue.js</strong>, <strong>React</strong>, <strong>Node.js</strong>, and <strong>Express js</strong> to create dynamic and responsive frontend and backend systems.
+
+                On the database side, I use <strong>PostgreSQL</strong> to design reliable and efficient data structures. 
+                I’m proficient with <strong>Git</strong> and <strong>GitHub</strong>, which I use daily for version control and collaborative development. 
+                I also have solid experience working with <strong>RESTful APIs</strong>, both in designing and consuming them in various personal and professional projects.
+
+                Autonomous, curious, and detail-oriented, I continuously seek to deepen my knowledge and stay up to date with the latest web technologies. 
+                I’m actively involved in building real-world solutions that allow me to put my skills into practice and deliver value.
               </p>
+
             </div>
           </div>
         </div>
 
-        <div className='flex flex-col items-center gap-8 py-20 px-4 lg:px-24'>
+        <div id='skills' className='scroll-mt-16 flex flex-col items-center gap-8 py-12 px-4 lg:px-24'>
           <div className='flex flex-col items-center gap-2'>
             <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>Skills</h2>
             <p className='text-gray-500 text-center'>The skills, tools and technologies I am really good at: </p>
           </div>
-          {/* className='grid md:grid-cols-8 grid-cols-4 justify-center place-items-center gap-4 w-full' */}
-          <div className='flex flex-wrap justify-center items-center gap-4 w-full'>
+          <div className='flex flex-wrap justify-center items-center gap-12 w-full'>
               { 
                 isLoading ? 
                 <Loader /> :
@@ -216,60 +152,44 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className='bg-gray-100 flex flex-col items-center gap-8 py-20 px-2 xl:px-24'>
+        <div id='experiences' className='scroll-mt-16 bg-gray-100 flex flex-col items-center gap-8 py-12 px-2 xl:px-24'>
           <div className='flex flex-col items-center gap-2'>
             <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>Experience</h2>
             <p className='text-gray-500 text-center'>Here is a quick summary of my most recent experience: </p>
           </div>
-          {
-            isLoading ? 
-
-            <Loader /> : 
-
-            formatedExperiences.map((experience: any, index: number) => (
-              <Experience key={index} description={experience.description} image={experience.image_company_url} jobTitle={experience.job_title} company={experience.comapny} end_date={experience.end_date} start_date={experience.start_date} />
-            ))
-          }
+          <ExperienceCatalog />
         </div>
 
-        <div id='portfolio' className='flex flex-col items-center gap-8 py-20 px-8 lg:px-24'>
+        <div id='portfolio' className='scroll-mt-16 flex flex-col items-center gap-8 py-12 px-2 xl:px-24'>
           <div className='flex flex-col items-center gap-2'>
             <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>Works</h2>
             <p className='text-gray-500 text-center'>Some of the noteworthy projects I have built: </p>
           </div>
-          {
-            isLoading ? 
-
-            <Loader /> : 
-            
-            formatedWorks.map((work: any, index: number) => (
-              <Work key={index} title={work.title} subtitle={work.subtitle} description={work.description} publication_date={work.publication_date} main_image={work.main_image} />
-            ))
-          }
+          <WorkCatalog />
         </div>
 
-        <div id='contact' className='bg-gray-100 flex flex-col items-center gap-8 py-20 px-2 xl:px-24'>
+        <div id='contact' className='min-h-[80vh] scroll-mt-16 bg-gray-100 flex flex-col items-center gap-8 py-12 px-2 xl:px-24'>
           <div className='flex flex-col items-center gap-2'>
             <h2 className='bg-gray-200 rounded-3xl py-1 px-4 text-gray-600'>Get in touch</h2>
-            <p className='text-gray-500 text-center'>What's next ? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.</p>
+            <p className='text-gray-500 text-center'>I’m always open to discussing projects, collaboration opportunities, or just tech in general. Feel free to connect via any of the channels below.</p>
           </div>
-          <div className='flex flex-col items-center gap-2 md:text-xl font-semibold relative'>
+          <div className='flex flex-col items-center gap-3 md:gap-8 border border-gray-400 md:text-xl font-semibold relative p-3 md:p-10 rounded-lg'>
             {
-              copied && <p className='text-sm text-white bg-black px-2 py-1 rounded-3xl absolute -top-7'>Copié</p>
+              copied && <p className='text-sm text-white bg-black px-2 py-1 rounded-3xl absolute top-1'>Copié</p>
             }
-            <div className='flex items-center gap-2'>
-              <a href="mailto:stevetcthoup20@gmail.com" className='flex items-center gap-2'>
+            <div className='flex items-center justify-between gap-2 border border-gray-400 p-2 py-4 md:p-6 rounded-lg w-full cursor-pointer hover:bg-gray-200 transition-all duration-75 ease-in-out'>
+              <a href="mailto:stevetcthoup20@gmail.com" target='blank' className='flex items-center gap-2'>
                 <img src={assets_icons.mail} alt="mail_icon" className='w-5 h-5' />
-                <p>stevetcthoup20@gmail.com</p>
+                <p className=' text-sm md:text-[16px]'>stevetcthoup20@gmail.com</p>
               </a>
-              <p className='cursor-pointer' onClick={copyMailToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
+              <p className='hidden md:block' onClick={copyMailToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
             </div>
-            <div className='flex items-center gap-2'>
-              <a href="https://whatsapp.com/dl/+237697932976?text=hello" className='flex items-center gap-2'>
+            <div className='flex items-center justify-between gap-2 border border-gray-400 p-2 py-4 md:p-6 rounded-lg w-full cursor-pointer hover:bg-gray-200 transition-all duration-75 ease-in-out'>
+              <a href="https://whatsapp.com/dl/+237697932976?text=hello" target='blank' className='flex items-center gap-2'>
                 <img src={assets_icons.phone} alt="phone" className='w-5 h-5'/>
-                <p>+237 697932976</p>
+                <p className='text-[16px]'>+237 697932976</p>
               </a>
-              <p className='cursor-pointer' onClick={copyPhoneToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
+              <p className='hidden md:block' onClick={copyPhoneToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
             </div>
           </div>
         </div>

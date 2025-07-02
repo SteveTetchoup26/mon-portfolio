@@ -1,38 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import VITE_API_URL from '../utils/API_URL'
 
 
-const Experience = ({image, jobTitle, company, description, start_date, end_date} : { image: string, jobTitle: string, company: string, description: string, start_date: string, end_date: string}) => {
+const Experience = ({ experience }: { experience: any }) => {
+  const { image_company_url, job_title, company, description, start_date, end_date } = experience;
   return (
-    <div 
-        className='bg-white w-full md:w-8/12 flex flex-col md:flex-row justify-between gap-1 md:gap-8 md:px-4 py-4 px-5 rounded-lg  
-            shadow-[0_5px_5px_#e2e2e2] cursor-pointer hover:shadow-[1px_5px_5px_#9e9e9e] transition-shadow duration-300'
-    >
-        <div className='w-[40px] h-[40px]'>
-            <img src={`${VITE_API_URL}/uploads/skills/` + image} alt="" crossOrigin="anonymous"/>
+    <div className="min-w-[350px] max-w-[350px] md:min-w-[400px] md:max-w-[400px] h-[228px] md:h-52 flex-shrink-0 snap-start bg-white rounded-xl p-3 md:p-4 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row gap-2 md:gap-4">
+      <div className="w-8 h-8 min-w-8 md:w-12 md:h-12 md:min-w-12 overflow-hidden flex items-center justify-center">
+        <img
+          src={`${VITE_API_URL}/uploads/skills/${image_company_url}`}
+          alt="company logo"
+          className="object-contain w-full h-full"
+          crossOrigin="anonymous"
+        />
+      </div>
+
+      <div className="flex flex-col gap-1 md:gap-2 flex-1 overflow-hidden">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900">{job_title}</h3>
+          <p className="text-sm text-gray-500">{company}</p>
         </div>
-        <div className='flex flex-1 flex-col-reverse gap-2 md:flex-row justify-between'>
-            <div className='basis-3/5 md:pl-2 pl-0'>
-                <div className='mb-2'>
-                    <h3 className='font-bold'>{ jobTitle }</h3>
-                    <p className='text-gray-500'>{ company }</p>
-                </div>
-                {/* <ul className='list-disc text-gray-700'>
-                    <li> fugiat possimus necessitatibus quia officia facere voluptates dolor excepturi, dignissimos ex.</li>
-                    <li> fugiat possimus necessitatibus quia officia facere dolor excepturi, dignissimos ex.</li>
-                    <li> fugiat possimus necessitatibus quia officia facere voluptates dolor excepturi, dignissimos ex.</li>
-                    <li> fugiat possimus necessitatibus quia officia facere voluptates dolor excepturi, dignissimos ex.</li>
-                    <li> fugiat possimus necessitatibus quia officia facere voluptates dolor excepturi, dignissimos ex.</li>
-                </ul> */}
-                <div className='text-gray-700'>
-                    { description }
-                </div>
-            </div>
-            <div>
-                <p className='text-gray-500 text-sm'>{ start_date} - {end_date }</p>
-            </div>
+
+        <div className="flex items-center text-xs text-gray-400 font-medium">
+          <span className="pr-1  py-1 rounded-md">{start_date}</span> - 
+          <span className="pl-1  py-1 rounded-md">{end_date}</span>
         </div>
+
+        <p className="text-sm text-gray-700 leading-relaxed line-clamp-4">
+          {description}
+        </p>
+      </div>
     </div>
-  )
+  );
 }
 
 export default Experience
