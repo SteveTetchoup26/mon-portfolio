@@ -24,7 +24,7 @@ const ExperienceCatalog = () => {
   const fetchExperiences = async () => {
     setIsLoading(true);
     try {
-      const result = await axios.get(`${VITE_API_URL}/v1/experiences/all`);
+      const result = await axios.get(`${VITE_API_URL}/v1/experiences/all`, { headers: { 'Cache-Control': 'no-cache' } });
       const formatted = result.data.experiences.map((experience: any) => ({
         ...experience,
         start_date: formatDate(experience.start_date),

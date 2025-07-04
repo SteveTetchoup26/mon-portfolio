@@ -40,7 +40,7 @@ const LandingPage = () => {
     const fetchSkill = async () => {
       setIsLoading(true)
       try {
-          const result = await axios.get(`${VITE_API_URL}/v1/skills/all`);
+          const result = await axios.get(`${VITE_API_URL}/v1/skills/all`, { headers: { 'Cache-Control': 'no-cache' } });
           setSkills(result.data.skills);
   
       } catch (err) {

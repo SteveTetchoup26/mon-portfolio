@@ -17,7 +17,7 @@ const WorkCatalog = () => {
   const fetchWorks = async () => {
     setIsLoading(true);
     try {
-        const result = await axios.get(`${VITE_API_URL}/v1/works/all`);
+        const result = await axios.get(`${VITE_API_URL}/v1/works/all`, { headers: { 'Cache-Control': 'no-cache' } });
         setWorks(result.data.works);
 
         const formatedWorks = result.data.works.map((work: any) => {
