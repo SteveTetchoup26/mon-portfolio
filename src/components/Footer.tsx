@@ -4,12 +4,6 @@ const Footer = () => {
   return (
         <div className='flex flex-col items-center justify-center gap-4 pt-14 pb-6 bg-black text-white'>
             <div className='flex gap-[8px]'>
-              <a href="https://www.facebook.com/stevetetchoup" 
-                className='bg-gray-400 p-1 rounded-lg hover:bg-gray-200 transition-all duration-200'
-                target='blank'
-                >
-                  <img src={assets_icons.facebook_icon} alt="" className='h-5 w-5' />
-              </a>
               <a href="https://www.linkedin.com/in/steve-tetchoup-98529027b" 
                 className='bg-gray-400 p-1 rounded-lg  hover:bg-gray-200 transition-all duration-200'
                 target='blank'

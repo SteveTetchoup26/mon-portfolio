@@ -21,6 +21,7 @@ const WorkDetail = () => {
   useEffect(() => {
     if (id) {
       fetchWork();
+      window.scrollTo(0, 0);
     }
   }, [id]);
 

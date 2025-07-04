@@ -16,7 +16,7 @@ const ExperienceCatalog = () => {
 
   const formatDate = (dt: Date) => {
     const date = new Date(dt);
-    const month = date.toLocaleString("fr-FR", { month: "long" });
+    const month = date.toLocaleString("en-US", { month: "long" });
     const year = date.getFullYear();
     return `${month} ${year}`;
   };

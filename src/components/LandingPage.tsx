@@ -81,12 +81,6 @@ const LandingPage = () => {
                 </div>
             </div>
             <div className='flex gap-[2px]'>
-              <a href="https://www.facebook.com/stevetetchoup" 
-                className='p-1 rounded-full hover:bg-gray-200 transition-all duration-200'
-                target='blank'
-                >
-                  <img src={assets_icons.facebook_icon} alt="" className='h-5 w-5' />
-              </a>
               <a href="https://www.linkedin.com/in/steve-tetchoup-98529027b" 
                 className='p-1 rounded-full hover:bg-gray-200 transition-all duration-200'
                 target='blank'
@@ -182,14 +176,14 @@ const LandingPage = () => {
                 <img src={assets_icons.mail} alt="mail_icon" className='w-5 h-5' />
                 <p className=' text-sm md:text-[16px]'>stevetcthoup20@gmail.com</p>
               </a>
-              <p className='hidden md:block' onClick={copyMailToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
+              <p className='' onClick={copyMailToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
             </div>
             <div className='flex items-center justify-between gap-2 border border-gray-400 p-2 py-4 md:p-6 rounded-lg w-full cursor-pointer hover:bg-gray-200 transition-all duration-75 ease-in-out'>
               <a href="https://whatsapp.com/dl/+237697932976?text=hello" target='blank' className='flex items-center gap-2'>
                 <img src={assets_icons.phone} alt="phone" className='w-5 h-5'/>
                 <p className='text-[16px]'>+237 697932976</p>
               </a>
-              <p className='hidden md:block' onClick={copyPhoneToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
+              <p className='' onClick={copyPhoneToClipboard}><img src={assets_icons.copy} alt="" className='w-5 h-5'/></p>
             </div>
           </div>
         </div>

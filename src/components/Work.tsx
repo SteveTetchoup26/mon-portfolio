@@ -8,12 +8,12 @@ const Work = ({ work } : { work: any }) => {
     return (
         <div 
             onClick={() => navigate(`/works/${id}`)}
-            className="relative bg-gray-100 min-w-[350px] max-w-[350px] md:min-w-[400px] md:max-w-[400px] h-[450px] flex flex-col py-3 px-3 gap-3 border border-gray-300 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:shadow-lg flex-shrink-0 snap-start"    
+            className="relative bg-gray-100 min-w-[350px] max-w-[350px] md:min-w-[400px] md:max-w-[400px] h-[460px] flex flex-col py-3 px-3 gap-3 border border-gray-300 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:shadow-lg flex-shrink-0 snap-start"    
         >
             <div className='w-full h-44 border border-gray-300 rounded-t-lg'>
                 <img src={`${VITE_API_URL}/uploads/skills/` + main_image} className='w-full h-full block rounded-t-lg' alt="" crossOrigin="anonymous" />
             </div>
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-2 md:gap-4'>
                 <h2 className='text-xl font-bold'>{ title }</h2>
                 <h3 className='text-sm text-gray-500'>{ subtitle }</h3>
                 <p className='text-gray-400'>
@@ -25,7 +25,7 @@ const Work = ({ work } : { work: any }) => {
                         <span className='text-sm text-orange-600 bg-orange-200 py-1 px-2 rounded-3xl'>In progress</span>
                     }
                     </p>
-                <p className='line-clamp-4 text-gray-600'>
+                <p className='line-clamp-3 text-gray-600'>
                     { description }
                 </p>
             </div>

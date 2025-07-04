@@ -5,7 +5,7 @@ import VITE_API_URL from '../utils/API_URL'
 const Experience = ({ experience }: { experience: any }) => {
   const { image_company_url, job_title, company, description, start_date, end_date } = experience;
   return (
-    <div className="min-w-[350px] max-w-[350px] md:min-w-[400px] md:max-w-[400px] h-[228px] md:h-52 flex-shrink-0 snap-start bg-white rounded-xl p-3 md:p-4 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row gap-2 md:gap-4">
+    <div className="min-w-[350px] max-w-[350px] md:min-w-[400px] md:max-w-[400px] h-[235px] md:h-52 flex-shrink-0 snap-start bg-white rounded-xl p-3 md:p-4 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row gap-2 md:gap-4">
       <div className="w-8 h-8 min-w-8 md:w-12 md:h-12 md:min-w-12 overflow-hidden flex items-center justify-center">
         <img
           src={`${VITE_API_URL}/uploads/skills/${image_company_url}`}
