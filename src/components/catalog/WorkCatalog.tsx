@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,6 @@ const WorkCatalog = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [works, setWorks] = useState<IWork[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(1);
   const [itemWidth, setItemWidth] = useState(400);
   const [canScroll, setCanScroll] = useState(false);
 
@@ -20,12 +19,10 @@ const WorkCatalog = () => {
     setIsLoading(true);
     try {
       const result = await axios.get(`${VITE_API_URL}/v1/works/all`);
-
       const formattedWorks = result.data.works?.map((work: any) => ({
         ...work,
         publication_date: new Date(work.publication_date).toISOString().split('T')[0].slice(0, 4),
       }));
-
       setWorks(formattedWorks);
     } catch (err) {
       console.error('Erreur lors du chargement des works :', err);
@@ -36,51 +33,33 @@ const WorkCatalog = () => {
 
   const scrollBy = (offset: number) => {
     if (containerRef.current) {
-      containerRef.current.scrollBy({
-        left: offset,
-        behavior: 'smooth',
-      });
+      containerRef.current.scrollBy({ left: offset, behavior: 'smooth' });
     }
   };
 
   const next = () => scrollBy(itemWidth);
   const previous = () => scrollBy(-itemWidth);
 
-  useEffect(() => {
-    const updateVisibleCount = () => {
-      if (containerRef.current) {
-        const isMobile = window.innerWidth < 768;
-        const width = isMobile ? 350 : 400;
-        setItemWidth(width);
+  const updateLayout = () => {
+    if (containerRef.current) {
+      const isMobile = window.innerWidth < 768;
+      const width = isMobile ? 350 : 400;
+      setItemWidth(width);
 
-        const containerWidth = containerRef.current.offsetWidth;
-        setVisibleCount(Math.floor(containerWidth / width));
-      }
-    };
-
-    updateVisibleCount();
-    window.addEventListener('resize', updateVisibleCount);
-    return () => window.removeEventListener('resize', updateVisibleCount);
-  }, []);
+      const el = containerRef.current;
+      setCanScroll(el.scrollWidth > el.clientWidth);
+    }
+  };
 
   useEffect(() => {
     fetchWorks();
   }, []);
 
-
   useEffect(() => {
-    const checkScrollability = () => {
-      if (containerRef.current) {
-        const el = containerRef.current;
-        setCanScroll(el.scrollWidth > el.clientWidth);
-      }
-    };
-
-    checkScrollability();
-    window.addEventListener('resize', checkScrollability);
-    return () => window.removeEventListener('resize', checkScrollability);
+    updateLayout();
+    window.addEventListener('resize', updateLayout);
+    return () => window.removeEventListener('resize', updateLayout);
   }, [works]);
-
 
   return (
     <div className="w-full px-0 md:px-24 py-10 flex flex-col items-center gap-y-8">

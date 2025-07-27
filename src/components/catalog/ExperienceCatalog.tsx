@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Experience from '../Experience';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -110,7 +110,7 @@ const ExperienceCatalog = () => {
       >
         {isLoading
           ? Array.from({ length: 4 }).map((_, i) => (
-              <ExperienceLoader />
+              <ExperienceLoader key={i} />
             ))
           : experiences?.map((exp) => (
               <Experience key={exp.id} experience={exp} />
