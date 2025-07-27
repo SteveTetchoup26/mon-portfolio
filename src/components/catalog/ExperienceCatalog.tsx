@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import VITE_API_URL from '../../utils/API_URL';
 import { IExperience } from '../../types';
+import ExperienceLoader from '../loader/ExperienceLoader';
 
 const ExperienceCatalog = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,6 +14,7 @@ const ExperienceCatalog = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(1);
   const [itemWidth, setItemWidth] = useState(400);
+  const [canScroll, setCanScroll] = useState(false);
 
   const formatDate = (dt: Date) => {
     const date = new Date(dt);
@@ -21,11 +23,13 @@ const ExperienceCatalog = () => {
     return `${month} ${year}`;
   };
 
+  
+
   const fetchExperiences = async () => {
     setIsLoading(true);
     try {
-      const result = await axios.get(`${VITE_API_URL}/v1/experiences/all`, { headers: { 'Cache-Control': 'no-cache' } });
-      const formatted = result.data.experiences.map((experience: any) => ({
+      const result = await axios.get(`${VITE_API_URL}/v1/experiences/all`);
+      const formatted = result.data.experiences?.map((experience: any) => ({
         ...experience,
         start_date: formatDate(experience.start_date),
         end_date: formatDate(experience.end_date),
@@ -80,7 +84,7 @@ const ExperienceCatalog = () => {
 
 
   useEffect(() => {
-    if (experiences.length > 0 && containerRef.current) {
+    if (experiences?.length > 0 && containerRef.current) {
       const isMobile = window.innerWidth < 768;
       const width = isMobile ? 350 : 400;
       setItemWidth(width);
@@ -90,26 +94,30 @@ const ExperienceCatalog = () => {
     }
   }, [experiences]);
 
-  const shouldShowControls = useMemo(() => {
-    return experiences.length > visibleCount;
-  }, [experiences.length, visibleCount]);
+
+  useEffect(() => {
+  if (containerRef.current) {
+    const el = containerRef.current;
+    setCanScroll(el.scrollWidth > el.clientWidth + 5); // +5 pour éviter les erreurs de bord
+  }
+}, [experiences, itemWidth, visibleCount]);
 
   return (
-    <div className="w-full px-6 md:px-24 py-10 flex flex-col items-center gap-y-8">
+    <div className="w-full px-0 md:px-24 py-10 flex flex-col items-center gap-y-8">
       <div
         className="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar max-w-[90vw] snap-x .no-scrollbar"
         ref={containerRef}
       >
         {isLoading
           ? Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="min-w-[400px] h-60 bg-gray-200 animate-pulse rounded-md" />
+              <ExperienceLoader />
             ))
-          : experiences.map((exp) => (
+          : experiences?.map((exp) => (
               <Experience key={exp.id} experience={exp} />
             ))}
       </div>
 
-      {!isLoading && shouldShowControls && (
+      {!isLoading && canScroll && (
         <div className="flex gap-4">
           <button
             onClick={previous}

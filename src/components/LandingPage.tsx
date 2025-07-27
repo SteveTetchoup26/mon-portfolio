@@ -9,6 +9,7 @@ import VITE_API_URL from '../utils/API_URL.ts'
 import axios from 'axios'
 import WorkCatalog from './catalog/WorkCatalog.tsx'
 import ExperienceCatalog from './catalog/ExperienceCatalog.tsx'
+import SkillLoader from './loader/SkillLoader.tsx'
 
 
 const LandingPage = () => {
@@ -38,9 +39,9 @@ const LandingPage = () => {
   }
   
     const fetchSkill = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-          const result = await axios.get(`${VITE_API_URL}/v1/skills/all`, { headers: { 'Cache-Control': 'no-cache' } });
+          const result = await axios.get(`${VITE_API_URL}/v1/skills/all`);
           setSkills(result.data.skills);
   
       } catch (err) {
@@ -59,7 +60,7 @@ const LandingPage = () => {
 
   return (
     <div className='mt-32'>
-        <div className='min-h-[80vh] mt-5 mb-20 px-8 xl:px-24 flex md:flex-row md:justify-between md:items-start gap-10 lg:gap-20  items-center flex-col-reverse'>
+        <div className='min-h-[80vh] mt-5 mb-20 px-8 xl:px-24 flex md:flex-row md:justify-between md:items-start lg:gap-20  items-center flex-col-reverse'>
           <div className='md:basis-3/5 flex flex-col gap-8'>
             <div>
               <h1 className='text-4xl font-bold mb-5'>Hi, I'm Steve TETCHOUP</h1>
@@ -138,8 +139,11 @@ const LandingPage = () => {
           <div className='flex flex-wrap justify-center items-center gap-12 w-full'>
               { 
                 isLoading ? 
-                <Loader /> :
-                skills.map((skill: any, index: number) => (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <SkillLoader />
+                ))
+                :
+                skills?.map((skill: any, index: number) => (
                   <Skills key={index} image={skill.image_url} name={skill.name} />
                 ))
               }

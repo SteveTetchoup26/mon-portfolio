@@ -6,7 +6,7 @@ import WorkDetail from './components/WorkDetail.tsx'
 
 const App = () => {
   return (
-    <div className='w-full mx-auto min-h-screen font-poppins'>
+    <div className='w-full mx-auto min-h-screen font-jetbrainsMono'>
       <Routes>
         <Route path='/' element={ 
             <MainLayout>

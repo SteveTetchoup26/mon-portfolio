@@ -11,7 +11,7 @@ const WorkDetail = () => {
 
   const fetchWork = async () => {
     try {
-      const response = await axios.get(`${VITE_API_URL}/v1/works/${id}`, { headers: { 'Cache-Control': 'no-cache' } });
+      const response = await axios.get(`${VITE_API_URL}/v1/works/${id}`);
       setWork(response.data.work);
     } catch (error) {
       console.error("Error fetching work details:", error);
